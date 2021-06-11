@@ -22,6 +22,5 @@ jobs:
         poetry install
     - name: Test with Tox
       run: |
-        poetry shell
-        imake tox
+        poetry run tox
 
