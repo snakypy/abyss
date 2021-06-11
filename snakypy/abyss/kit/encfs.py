@@ -26,7 +26,7 @@ class Encfs(Base):
     def verify_create(self):
         path = self.get_path()
         if not isdir(path):
-            printer(f'Repository not found. Run command: "abyss --encfs init". Aborted!', foreground=FG().ERROR)
+            printer('Repository not found. Run command: "abyss --encfs create". Aborted!', foreground=FG().ERROR)
             exit(1)
 
     @staticmethod
@@ -77,7 +77,7 @@ class Encfs(Base):
         printer("Repository umount successfully.", foreground=FG().FINISH)
 
     def main(self, menu):
-        if menu.main().encfs == "set":
+        if menu.main().encfs == "create":
             self.create()
         elif menu.main().encfs == "mount":
             self.mount()
