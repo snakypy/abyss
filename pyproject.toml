@@ -1,0 +1,83 @@
+[tool.poetry]
+name = 'snakypy-abyss'
+version = '0.1.0'
+description = 'Abyss is a toolkit for encrypting data and erasing data from certain directories.'
+readme = 'README.md'
+authors = ['Snakypy Org <contact.snakypy@gmail.com>']
+license = 'MIT license'
+keywords=['crypt,data,secret']
+homepage = 'https://github.com/snakypy/abyss'
+repository = 'http://github.com/snakypy/abyss'
+include = ['LICENSE']
+
+packages = [
+    { include = 'snakypy' }
+]
+
+classifiers = [
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: POSIX',
+    'Programming Language :: Python :: 3'
+]
+
+[tool.poetry.urls]
+'Bug Tracker' = 'http://github.com/snakypy/abyss/issues'
+
+[tool.poetry.scripts]
+abyss = "snakypy.abyss.cli:main"
+
+[tool.poetry.dependencies]
+python = '^3.9'
+snakypy-helpers = '^0.2.0'
+
+[tool.poetry.dev-dependencies]
+flake8 = '^3.9.2'
+black = '^21.5b2'
+tox = '^3.23.1'
+imake = '^0.1.2'
+pytest = '^6.2.4'
+pytest-runner = '^5.3.1'
+
+[tool.black]
+line-length = 120
+target-version = ['py38']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.pytest_cache
+    | \.tox
+    | \venv
+    | build
+    | venv
+    | dist
+    | docs
+    | tmp
+  )/
+)
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+src_paths = ["snakypy", "tests"]
+line_length = 88
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+cache_dir = ".pytest_cache"
+# addopts = "-ra -q"
+testpaths = ["tests"]
+
+[build-system]
+requires = ['poetry-core>=1.0.0']
+build-backend = 'poetry.core.masonry.api'

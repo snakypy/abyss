@@ -1,0 +1,5 @@
+[build]
+description = "Compile the project for publication and installation."
+header = "Build project abyss..."
+commands = ["python -m snakypy.abyss", "poetry build"]
+footer = "Compilation command terminated!"
