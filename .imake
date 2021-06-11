@@ -3,3 +3,10 @@ description = "Compile the project for publication and installation."
 header = "Build project abyss..."
 commands = ["python -m snakypy.abyss", "poetry build"]
 footer = "Compilation command terminated!"
+
+[tox]
+description = "Tests using the Tox library."
+header = "Starting tests with Tox ..."
+commands = ["poetry run tox"]
+footer = "Test command terminated!"
+
