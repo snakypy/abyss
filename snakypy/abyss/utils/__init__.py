@@ -1,14 +1,16 @@
-from pathlib import Path
-from os.path import join
-from snakypy.abyss import __info__
-from textwrap import dedent
-from snakypy.helpers.files import read_json
-from snakypy.abyss.config import Config
 import argparse
 from argparse import RawTextHelpFormatter
-from snakypy.helpers import FG, NONE
-from time import strftime
 from contextlib import suppress
+from os.path import join
+from pathlib import Path
+from textwrap import dedent
+from time import strftime
+
+from snakypy.helpers import FG, NONE
+from snakypy.helpers.files import read_json
+
+from snakypy.abyss import __info__
+from snakypy.abyss.config import Config
 
 
 class Base:
@@ -25,7 +27,7 @@ class Menu(Base):
         with suppress(FileNotFoundError):
             self.parser = read_json(self.config_file)
 
-    def main(self):
+    def main(self) -> argparse.Namespace:
         description_package = dedent(
             f"""
                 {__info__["name"].title()} is a toolkit for encrypting data and erasing data from certain directories.
@@ -41,24 +43,22 @@ class Menu(Base):
             "--config",
             metavar="ACTION",
             help="perform actions on the configuration file\n"
-                 f"{FG().BLUE}ACTION             DESCRIPTION{NONE}\n"
-                 "set             Create configuration file\n"
-                 "open               Open configuration file\n"
-                 "view               View configuration file\n"
-
+            f"{FG().BLUE}ACTION             DESCRIPTION{NONE}\n"
+            "set             Create configuration file\n"
+            "open               Open configuration file\n"
+            "view               View configuration file\n",
         )
         if self.parser["encfs"]["enable"]:
             arg_parser.add_argument(
                 "--encfs",
                 metavar="ACTION",
                 help="data encryption tool\n"
-                     f"{FG().BLUE}ACTION             DESCRIPTION{NONE}\n"
-                     "create             Creates the structure where the encrypted"
-                     "and decrypted folder will be stored.\n"
-                     "mount              Mount the encrypted folder\n"
-                     "umount             Unmount the encrypted folder\n"
-                     "status             Checks if encrypted folder is mounted\n"
-
+                f"{FG().BLUE}ACTION             DESCRIPTION{NONE}\n"
+                "create             Creates the structure where the encrypted"
+                "and decrypted folder will be stored.\n"
+                "mount              Mount the encrypted folder\n"
+                "umount             Unmount the encrypted folder\n"
+                "status             Checks if encrypted folder is mounted\n",
             )
         if self.parser["zeroed"]["enable"]:
             arg_parser.add_argument(

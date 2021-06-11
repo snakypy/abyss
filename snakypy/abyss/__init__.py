@@ -11,14 +11,10 @@ For more information, access: 'https://github.com/snakypy/abyss'
 :license: MIT license, see LICENSE for details.
 """
 from os.path import abspath, dirname, join
+
 from snakypy.helpers.files import eqversion
 
-
-__info__ = {
-    "name": "abyss",
-    "version": "0.1.0",
-    "organization": "Snakypy"
-}
+__info__ = {"name": "abyss", "version": "0.1.0", "organization": "Snakypy"}
 
 
 # Keep the versions the same on pyproject.toml and __init__.py
