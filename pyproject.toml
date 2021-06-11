@@ -39,6 +39,7 @@ imake = '^0.1.2'
 pytest = '^6.2.4'
 pytest-runner = '^5.3.1'
 isort = "^5.8.0"
+mypy = "^0.902"
 
 [tool.black]
 line-length = 120
