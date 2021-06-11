@@ -10,7 +10,6 @@ For more information, access: 'https://github.com/snakypy/abyss'
 :copyright: Copyright 2020-present, see AUTHORS.
 :license: MIT license, see LICENSE for details.
 """
-from snakypy.helpers.files import eqversion
 from os.path import abspath, dirname, join
 from snakypy.helpers.files import eqversion
 
