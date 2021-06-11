@@ -53,7 +53,7 @@ class Menu(Base):
                 metavar="ACTION",
                 help="data encryption tool\n"
                      f"{FG().BLUE}ACTION             DESCRIPTION{NONE}\n"
-                     "init               Creates the structure where the encrypted"
+                     "create             Creates the structure where the encrypted"
                      "and decrypted folder will be stored.\n"
                      "mount              Mount the encrypted folder\n"
                      "umount             Unmount the encrypted folder\n"
