@@ -6,6 +6,7 @@ from snakypy.helpers.path import create as create_path
 
 class Config:
     @property
+    # TODO: Add multiple path ("path": []) in "encfs".
     def get(self) -> dict:
         return {
             "zeroed": {
