@@ -1,6 +1,6 @@
 """
-abyss
-~~~~~~~~~~~~~~~~~
+Abyss
+~~~~~~
 
 Abyss is a toolkit for encrypting data and erasing data from certain directories.
 
