@@ -1,10 +1,11 @@
 .. image:: https://github.com/snakypy/abyss/workflows/Tests/badge.svg
     :target: https://github.com/snakypy/abyss
 
-.. image:: https://img.shields.io/pypi/v/abyss.svg
-    :target: https://pypi.python.org/pypi/abyss
+.. image:: https://img.shields.io/pypi/v/snakypy-abyss
+    :target: https://pypi.python.org/pypi/snakypy-abyss
 
-.. image:: https://img.shields.io/pypi/wheel/abyss
+.. image:: https://img.shields.io/pypi/wheel/snakypy-abyss
+    :target: https://img.shields.io/pypi/wheel/snakypy-abyss
     :alt: PyPI - Wheel
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg

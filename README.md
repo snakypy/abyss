@@ -2,11 +2,11 @@
 
 ![Tests](https://github.com/snakypy/abyss/workflows/Tests/badge.svg)
 ![Docs](https://readthedocs.org/projects/abyss/badge/?version=latest)
-![PyPI - Wheel](https://img.shields.io/pypi/wheel/abyss)
-![PyPI](https://img.shields.io/pypi/v/abyss)
-![PyPI - Implementation](https://img.shields.io/pypi/implementation/abyss)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/abyss)
-![PyPI - License](https://img.shields.io/pypi/l/abyss)
+![PyPI - Wheel](https://img.shields.io/pypi/wheel/snakypy-abyss)
+![PyPI](https://img.shields.io/pypi/v/snakypy-abyss)
+![PyPI - Implementation](https://img.shields.io/pypi/implementation/snakypy-abyss)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/snakypy-abyss)
+![PyPI - License](https://img.shields.io/pypi/l/snakypy-abyss)
 
 [comment]: <> (<div align="center">)
 
