@@ -1,11 +1,11 @@
-from os import environ
+from os import environ, geteuid
 from shutil import which
 from subprocess import call
-from os import geteuid
-from snakypy.abyss import __info__
 from sys import exit
 
-from snakypy.helpers import printer, FG
+from snakypy.helpers import FG, printer
+
+from snakypy.abyss import __info__
 
 
 def editor_run(editor, config) -> bool:
