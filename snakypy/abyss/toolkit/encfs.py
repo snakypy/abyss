@@ -28,7 +28,7 @@ class Encfs:
             printer('Repository not found. Run command: "abyss --encfs create". Aborted!', foreground=FG().ERROR)
             exit(1)
 
-    def status(self) -> str:
+    def get_status(self) -> str:
         result = run(
             f'df -h | grep "{join(self.get_path(), "decrypted")}"',
             shell=True,
@@ -53,7 +53,7 @@ class Encfs:
 
     def mount(self):
         self.verify_create()
-        if self.status():
+        if self.get_status():
             printer("Repository is already set up.", foreground=FG().WARNING)
             exit(0)
         cmd = run(
@@ -73,7 +73,7 @@ class Encfs:
         )
 
     def umount(self):
-        if not self.status():
+        if not self.get_status():
             printer("There is no repository to disassemble.", foreground=FG().WARNING)
             exit(0)
         self.verify_create()
@@ -83,21 +83,25 @@ class Encfs:
             unlink(f"{join(environ['HOME'], 'Encfs_ON')}")
         printer("Repository umount successfully.", foreground=FG().FINISH)
 
-    def show_status(self):
-        if self.status():
+    def status(self):
+        if self.get_status():
             printer(f"Mounted in: {FG().MAGENTA}{join(environ['HOME'], 'Encfs_ON')}", foreground=FG().CYAN)
         else:
-            printer("Not mounted", foreground=FG().WARNING)
+            printer("There is no mounted repository.", foreground=FG().WARNING)
 
     def main(self, menu, path):
-        Config().he_exists(path)
+        try:
+            Config().exists(path)
 
-        if self.parser["encfs"]["enable"]:
-            if menu.main().encfs == "create":
-                self.create()
-            elif menu.main().encfs == "mount":
-                self.mount()
-            elif menu.main().encfs == "umount":
-                self.umount()
-            elif menu.main().encfs == "status":
-                self.show_status()
+            if self.parser["encfs"]["enable"]:
+                if menu.main().encfs == "create":
+                    self.create()
+                elif menu.main().encfs == "mount":
+                    self.mount()
+                elif menu.main().encfs == "umount":
+                    self.umount()
+                elif menu.main().encfs == "status":
+                    self.status()
+        except KeyboardInterrupt:
+            printer("Aborted by user", foreground=FG().WARNING)
+            exit(0)
