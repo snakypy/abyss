@@ -1,6 +1,6 @@
 """CLI - Command Line Interface"""
 from snakypy.abyss.config import Config
-from snakypy.abyss.kit.encfs import Encfs
+from snakypy.abyss.toolkit.encfs import Encfs
 from snakypy.abyss.utils.base import Base
 from snakypy.abyss.utils.menu import Menu
 
