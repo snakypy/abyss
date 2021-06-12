@@ -28,7 +28,7 @@ class Config:
         }
 
     @staticmethod
-    def he_exists(config_file):
+    def exists(config_file):
         if not exists(config_file):
             printer('Configuration file does not exist. Use: "abyss --config create".', foreground=FG().ERROR)
             exit(1)
