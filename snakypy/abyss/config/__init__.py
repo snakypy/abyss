@@ -1,9 +1,11 @@
-from snakypy.abyss.utils.functools import editor_run
-from snakypy.helpers import printer, FG
+from os.path import exists
+from sys import exit
+
+from snakypy.helpers import FG, printer
 from snakypy.helpers.files import create_json
 from snakypy.helpers.path import create as create_path
-from sys import exit
-from os.path import exists
+
+from snakypy.abyss.utils.functools import editor_run
 
 
 class Config:
@@ -11,9 +13,7 @@ class Config:
     @property
     def get(self) -> dict:
         return {
-            "general": {
-                "editor": "vim"
-            },
+            "general": {"editor": "vim"},
             "zeroed": {
                 "enable": False,
                 "delete_secure": [

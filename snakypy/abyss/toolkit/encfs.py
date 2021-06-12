@@ -4,7 +4,7 @@ from os.path import isdir, join
 from subprocess import run
 from sys import exit
 
-from snakypy.helpers import FG, printer, NONE
+from snakypy.helpers import FG, NONE, printer
 from snakypy.helpers.files import read_json
 from snakypy.helpers.path import create as create_path
 

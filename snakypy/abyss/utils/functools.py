@@ -1,6 +1,6 @@
+from os import environ
 from shutil import which
 from subprocess import call
-from os import environ
 
 
 def editor_run(editor, config) -> bool:

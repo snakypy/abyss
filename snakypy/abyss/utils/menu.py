@@ -1,10 +1,8 @@
 import argparse
 from argparse import RawTextHelpFormatter
 from contextlib import suppress
-
 from textwrap import dedent
 from time import strftime
-
 
 from snakypy.helpers import FG, NONE
 from snakypy.helpers.files import read_json
