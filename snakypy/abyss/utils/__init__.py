@@ -44,7 +44,7 @@ class Menu(Base):
             metavar="ACTION",
             help="perform actions on the configuration file\n"
             f"{FG().BLUE}ACTION             DESCRIPTION{NONE}\n"
-            "set             Create configuration file\n"
+            "create             Create configuration file\n"
             "open               Open configuration file\n"
             "view               View configuration file\n",
         )

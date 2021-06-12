@@ -1,23 +1,21 @@
 from contextlib import suppress
 from os import environ, symlink, unlink
 from os.path import isdir, join
-from subprocess import check_output, run
+from subprocess import run
 from sys import exit
 
-from snakypy.helpers import FG, printer
+from snakypy.helpers import FG, printer, NONE
 from snakypy.helpers.files import read_json
 from snakypy.helpers.path import create as create_path
 
 from snakypy.abyss.config import Config
-from snakypy.abyss.utils import Base
 
 
-class Encfs(Base):
-    def __init__(self):
-        Base.__init__(self)
+class Encfs:
+    def __init__(self, config_file):
         self.parser: dict = Config().get
         with suppress(FileNotFoundError):
-            self.parser: dict = read_json(self.config_file)
+            self.parser: dict = read_json(config_file)
 
     def get_path(self) -> str:
         path: str = self.parser["encfs"]["path"]
@@ -26,20 +24,25 @@ class Encfs(Base):
         return join(path, ".encfs")
 
     def verify_create(self):
-        path = self.get_path()
-        if not isdir(path):
+        if not isdir(self.get_path()):
             printer('Repository not found. Run command: "abyss --encfs create". Aborted!', foreground=FG().ERROR)
             exit(1)
 
-    @staticmethod
-    def status() -> str:
-        result = check_output("df -h | grep encfs | awk '{ print $1 }'", shell=True, universal_newlines=True)
+    def status(self) -> str:
+        result = run(
+            f'df -h | grep "{join(self.get_path(), "decrypted")}"',
+            shell=True,
+            universal_newlines=True,
+            capture_output=True,
+        ).stdout
         return result
 
     def create(self):
         path = self.get_path()
         if isdir(path):
-            printer("Repository already exists. Nothing to do.", foreground=FG().WARNING)
+            printer(
+                f'Repository already exists. Use: "{FG().MAGENTA}abyss --encfs mount{NONE}".', foreground=FG().WARNING
+            )
         else:
             create_path(path, join(path, "decrypted"), join(path, "encrypted"))
             with suppress(FileNotFoundError):
@@ -53,9 +56,8 @@ class Encfs(Base):
         if self.status():
             printer("Repository is already set up.", foreground=FG().WARNING)
             exit(0)
-        path = self.get_path()
         cmd = run(
-            f'encfs {join(path, "encrypted")} {join(path, "decrypted")}',
+            f'encfs {join(self.get_path(), "encrypted")} {join(self.get_path(), "decrypted")}',
             shell=True,
             universal_newlines=True,
             capture_output=True,
@@ -64,7 +66,7 @@ class Encfs(Base):
             printer("Password incorrect. Aborted.", foreground=FG().ERROR)
             exit(1)
         with suppress(FileExistsError):
-            symlink(join(path, "decrypted"), join(environ["HOME"], "Encfs_ON"))
+            symlink(join(self.get_path(), "decrypted"), join(environ["HOME"], "Encfs_ON"))
         printer(
             f"Repository successfully mounted on: {FG().MAGENTA}\"{join(environ['HOME'], 'Encfs_ON')}\"",
             foreground=FG().FINISH,
@@ -81,10 +83,21 @@ class Encfs(Base):
             unlink(f"{join(environ['HOME'], 'Encfs_ON')}")
         printer("Repository umount successfully.", foreground=FG().FINISH)
 
-    def main(self, menu):
-        if menu.main().encfs == "create":
-            self.create()
-        elif menu.main().encfs == "mount":
-            self.mount()
-        elif menu.main().encfs == "umount":
-            self.umount()
+    def show_status(self):
+        if self.status():
+            printer(f"Mounted in: {FG().MAGENTA}{join(environ['HOME'], 'Encfs_ON')}", foreground=FG().CYAN)
+        else:
+            printer("Not mounted", foreground=FG().WARNING)
+
+    def main(self, menu, path):
+        Config().he_exists(path)
+
+        if self.parser["encfs"]["enable"]:
+            if menu.main().encfs == "create":
+                self.create()
+            elif menu.main().encfs == "mount":
+                self.mount()
+            elif menu.main().encfs == "umount":
+                self.umount()
+            elif menu.main().encfs == "status":
+                self.show_status()
