@@ -1,6 +1,11 @@
 from os import environ
 from shutil import which
 from subprocess import call
+from os import geteuid
+from snakypy.abyss import __info__
+from sys import exit
+
+from snakypy.helpers import printer, FG
 
 
 def editor_run(editor, config) -> bool:
@@ -10,3 +15,9 @@ def editor_run(editor, config) -> bool:
             call([get_editor, f.name])
             return True
     return False
+
+
+def deny_user_permission(uid=None):
+    if uid and geteuid() == uid:
+        printer(f'{__info__["name"].title()} can not be run with user UID {uid}. Aborted!', foreground=FG().ERROR)
+        exit(1)
