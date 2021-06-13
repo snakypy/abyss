@@ -5,9 +5,4 @@ Credits
 Development Lead
 ----------------
 
-* Snakypy Org <contact.snakypy@gmail.com>
-
-Contributors
-------------
-
-None yet. Why not be the first?
+* William C. Canin <william.costa.canin@gmail.com>
