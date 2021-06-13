@@ -21,13 +21,13 @@ Globally:
 
 .. code-block:: shell
 
-    $ pip install git+https://github.com/snakypy/abyss.git@0.1.0
+    $ pip install git+https://github.com/snakypy/abyss.git@v0.1.0
 
 For the user:
 
 .. code-block:: shell
 
-    $ pip install git+https://github.com/snakypy/abyss.git@0.1.0 --user
+    $ pip install git+https://github.com/snakypy/abyss.git@v0.1.0 --user
 
 
 Using

@@ -13,7 +13,7 @@ Abyss is a toolkit for encrypting data and erasing data from certain directories
 ## Install
 
 ```shell
-pip install git+https://github.com/snakypy/abyss.git@0.1.0
+pip install git+https://github.com/snakypy/abyss.git@v0.1.0
 ```
 
 ## Usage
