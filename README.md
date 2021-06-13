@@ -21,6 +21,11 @@ pip install git+https://github.com/snakypy/abyss.git@v0.1.0
 ```shell
 abyss -h
 ```
+## Uninstall
+
+```shell
+pip uninstall snakypy-abyss
+```
 
 ## License
 

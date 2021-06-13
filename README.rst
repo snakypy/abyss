@@ -37,6 +37,13 @@ Access the official page of the project where you can find a description of use:
 
 Homepage: https://github.com/snakypy/abyss
 
+Uninstall
+----------
+
+.. code-block:: shell
+
+    $ pip uninstall snakypy-abyss
+
 License
 -------
 
