@@ -1,5 +1,6 @@
 from contextlib import suppress
 from os import environ, system
+from os.path import exists
 from subprocess import DEVNULL, call
 from typing import Callable
 
@@ -29,6 +30,7 @@ class Shred:
                 several: list = self.parser["shred"]["secure"]["directories"]["several"]
                 if several:
                     for path in several:
+                        path = path.replace("$HOME", environ["HOME"])
                         cmd = f"find {path} -depth -type f -exec shred -v -n {str(steps)} -z -u {{}} \\;"
                         call(cmd, shell=True, stderr=DEVNULL, stdout=DEVNULL) if silent else system(cmd)
                         rmdir_blank(path)
@@ -37,8 +39,11 @@ class Shred:
         paths: list = self.parser["shred"]["normal"]["directories"]
         if paths:
             for path in paths:
-                cleaner(path, level=1)
-                cleaner(path, level=2)
+                path = path.replace("$HOME", environ["HOME"])
+                if exists(path):
+                    with suppress(PermissionError):
+                        cleaner(path, level=1)
+                        cleaner(path, level=2)
 
     def run(self, Menu: Callable, path: str):
         try:
