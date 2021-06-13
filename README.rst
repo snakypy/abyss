@@ -1,29 +1,7 @@
-.. image:: https://github.com/snakypy/abyss/workflows/Tests/badge.svg
-    :target: https://github.com/snakypy/abyss
-
-.. image:: https://img.shields.io/pypi/v/snakypy-abyss
-    :target: https://pypi.python.org/pypi/snakypy-abyss
-
-.. image:: https://img.shields.io/pypi/wheel/snakypy-abyss
-    :target: https://img.shields.io/pypi/wheel/snakypy-abyss
-    :alt: PyPI - Wheel
-
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/psf/black
-
-.. image:: https://img.shields.io/github/issues-raw/snakypy/abyss
-    :alt: GitHub issues
-
-.. image:: https://img.shields.io/github/license/snakypy/abyss
-    :alt: GitHub license
-    :target: https://github.com/snakypy/abyss/blob/master/LICENSE
-
-
 Abyss
 ------
 
 Abyss is a toolkit for encrypting data and erasing data from certain directories.
-
 
 Requirements
 ------------
@@ -32,6 +10,9 @@ To work correctly, you will first need:
 
 * `python`_ (v3.9 or recent) must be installed.
 * `pip`_ (v20.0 or recent) must be installed.
+* `encfs`_
+* shred (Built-in Linux)
+* find (Built-in Linux)
 
 Installing
 ----------
@@ -40,13 +21,13 @@ Globally:
 
 .. code-block:: shell
 
-    $ sudo pip install abyss
+    $ pip install git+https://github.com/snakypy/abyss.git@0.1.0
 
 For the user:
 
 .. code-block:: shell
 
-    $ pip install abyss --user
+    $ pip install git+https://github.com/snakypy/abyss.git@0.1.0 --user
 
 
 Using
@@ -71,10 +52,10 @@ Links
 
 * Code: https://github.com/snakypy/abyss
 * Documentation: https://github.com/snakypy/abyss/blob/main/README.md
-* Releases: https://pypi.org/project/abyss/#history
 * Issue tracker: https://github.com/snakypy/abyss/issues
 
 .. _AUTHORS: https://github.com/snakypy/abyss/blob/main/AUTHORS.rst
 .. _python: https://python.org
 .. _pip: https://pip.pypa.io/en/stable/quickstart/
+.. _encfs: https://vgough.github.io/encfs/
 .. _MIT License: https://github.com/snakypy/abyss/blob/main/LICENSE

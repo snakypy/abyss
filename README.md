@@ -1,32 +1,26 @@
 # Abyss
 
-![Tests](https://github.com/snakypy/abyss/workflows/Tests/badge.svg)
-![Docs](https://readthedocs.org/projects/abyss/badge/?version=latest)
-![PyPI - Wheel](https://img.shields.io/pypi/wheel/snakypy-abyss)
-![PyPI](https://img.shields.io/pypi/v/snakypy-abyss)
-![PyPI - Implementation](https://img.shields.io/pypi/implementation/snakypy-abyss)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/snakypy-abyss)
-![PyPI - License](https://img.shields.io/pypi/l/snakypy-abyss)
-
-[comment]: <> (<div align="center">)
-
-[comment]: <> (  <h4>)
-
-[comment]: <> (    | <a href="https://github.com/snakypy/abyss">Website</a> |)
-
-[comment]: <> (    <a href="#features">Features</a> |)
-
-[comment]: <> (    <a href="#requirements">Requirements</a> |)
-
-[comment]: <> (    <a href="#installing">Install</a> |)
-
-[comment]: <> (  </h4>)
-
-[comment]: <> (</div>)
-
-<br>
-
 Abyss is a toolkit for encrypting data and erasing data from certain directories.
+
+## Requirements
+
+* python (v3.9 or recent)
+* pip (v20.0 or recent)
+* [encfs](https://vgough.github.io/encfs/)
+* shred (Built-in Linux)
+* find (Built-in Linux)
+
+## Install
+
+```shell
+pip install git+https://github.com/snakypy/abyss.git@0.1.0
+```
+
+## Usage
+
+```shell
+abyss -h
+```
 
 ## License
 
@@ -34,4 +28,4 @@ The project is available as open source under the terms of the [MIT License](htt
 
 ## Credits
 
-See, [AUTHORS](https://github.com/snakypy/abyss/blob/master/AUTHORS.rst).
+See, [AUTHOR](https://github.com/snakypy/abyss/blob/master/AUTHORS.rst).
