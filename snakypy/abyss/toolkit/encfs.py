@@ -9,6 +9,7 @@ from snakypy.helpers import FG, NONE, printer
 from snakypy.helpers.files import read_json
 from snakypy.helpers.path import create as create_path
 
+from snakypy.abyss import __info__
 from snakypy.abyss.config import Config
 
 
@@ -17,6 +18,9 @@ class Encfs:
         self.parser: dict = Config().get
         with suppress(FileNotFoundError):
             self.parser = read_json(config_file)
+        self.decrypted = self.parser["encfs"]["folder_name"]["decrypted"]
+        self.encrypted = self.parser["encfs"]["folder_name"]["encrypted"]
+        self.symlink_decrypted = self.parser["encfs"]["symlink"]["decrypted"]
 
     def get_path(self) -> str:
         path: str = self.parser["encfs"]["path"]
@@ -26,12 +30,15 @@ class Encfs:
 
     def verify_create(self):
         if not isdir(self.get_path()):
-            printer('Repository not found. Run command: "abyss --encfs create". Aborted!', foreground=FG().ERROR)
+            printer(
+                f'Repository not found. Run command: "{__info__["executable"]} --encfs create". Aborted!',
+                foreground=FG().ERROR,
+            )
             exit(1)
 
     def get_status(self) -> str:
         result = run(
-            f'df -h | grep "{join(self.get_path(), "decrypted")}"',
+            f'df -h | grep "{join(self.get_path(), self.decrypted)}"',
             shell=True,
             universal_newlines=True,
             capture_output=True,
@@ -42,14 +49,15 @@ class Encfs:
         path = self.get_path()
         if isdir(path):
             printer(
-                f'Repository already exists. Use: "{FG().MAGENTA}abyss --encfs mount{NONE}".', foreground=FG().WARNING
+                f'Repository already exists. Use: "{FG().MAGENTA}{__info__["executable"]} --encfs mount{NONE}".',
+                foreground=FG().WARNING,
             )
         else:
-            create_path(path, join(path, "decrypted"), join(path, "encrypted"))
+            create_path(path, join(path, self.decrypted), join(path, self.encrypted))
             with suppress(FileNotFoundError):
-                unlink(f"{join(environ['HOME'], 'Encfs_ON')}")
-            run(f'encfs {join(path, "encrypted")} {join(path, "decrypted")}', shell=True, universal_newlines=True)
-            run(f'encfs -u {join(path, "decrypted")}', shell=True, universal_newlines=True)
+                unlink(f"{join(environ['HOME'], self.symlink_decrypted)}")
+            run(f"encfs {join(path, self.encrypted)} {join(path, self.decrypted)}", shell=True, universal_newlines=True)
+            run(f"encfs -u {join(path, self.decrypted)}", shell=True, universal_newlines=True)
             printer("Repository created successfully.", foreground=FG().FINISH)
 
     def mount(self):
@@ -58,7 +66,7 @@ class Encfs:
             printer("Repository is already set up.", foreground=FG().WARNING)
             exit(0)
         cmd = run(
-            f'encfs {join(self.get_path(), "encrypted")} {join(self.get_path(), "decrypted")}',
+            f"encfs {join(self.get_path(), self.encrypted)} {join(self.get_path(), self.decrypted)}",
             shell=True,
             universal_newlines=True,
             capture_output=True,
@@ -67,9 +75,9 @@ class Encfs:
             printer("Password incorrect. Aborted.", foreground=FG().ERROR)
             exit(1)
         with suppress(FileExistsError):
-            symlink(join(self.get_path(), "decrypted"), join(environ["HOME"], "Encfs_ON"))
+            symlink(join(self.get_path(), self.decrypted), join(environ["HOME"], self.symlink_decrypted))
         printer(
-            f"Repository successfully mounted on: {FG().MAGENTA}\"{join(environ['HOME'], 'Encfs_ON')}\"",
+            f"Repository successfully mounted on: {FG().MAGENTA}\"{join(environ['HOME'], self.symlink_decrypted)}\"",
             foreground=FG().FINISH,
         )
 
@@ -79,14 +87,14 @@ class Encfs:
             exit(0)
         self.verify_create()
         path = self.get_path()
-        run(f'encfs -u {join(path, "decrypted")}', shell=True)
+        run(f"encfs -u {join(path, self.decrypted)}", shell=True)
         with suppress(FileNotFoundError):
-            unlink(f"{join(environ['HOME'], 'Encfs_ON')}")
+            unlink(f"{join(environ['HOME'], self.symlink_decrypted)}")
         printer("Repository umount successfully.", foreground=FG().FINISH)
 
     def status(self):
         if self.get_status():
-            printer(f"Mounted in: {FG().MAGENTA}{join(environ['HOME'], 'Encfs_ON')}", foreground=FG().CYAN)
+            printer(f"Mounted in: {FG().MAGENTA}{join(environ['HOME'], self.symlink_decrypted)}", foreground=FG().CYAN)
         else:
             printer("There is no mounted repository.", foreground=FG().WARNING)
 
