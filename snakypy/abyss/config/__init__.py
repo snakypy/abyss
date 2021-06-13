@@ -24,6 +24,8 @@ class Config:
             "encfs": {
                 "enable": False,
                 "path": "$HOME/.encfs",
+                "symlink": {"decrypted": "Open_Crypt"},
+                "folder_name": {"decrypted": "show", "encrypted": "hide"},
             },
         }
 
