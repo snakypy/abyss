@@ -1,8 +1,10 @@
 from os.path import exists
+from pydoc import pager
 from sys import exit
+from typing import Callable
 
 from snakypy.helpers import FG, printer
-from snakypy.helpers.files import create_json
+from snakypy.helpers.files import create_json, read_file
 from snakypy.helpers.path import create as create_path
 
 from snakypy.abyss.utils.functools import editor_run
@@ -14,12 +16,10 @@ class Config:
     def get(self) -> dict:
         return {
             "general": {"editor": "vim"},
-            "zeroed": {
+            "shred": {
                 "enable": False,
-                "delete_secure": [
-                    "$HOME/.local/share/Trash/files/",
-                ],
-                "delete_normal": [],
+                "secure": {"steps": 2, "directories": {"trash": "$HOME/.local/share/Trash/files", "several": []}},
+                "normal": {"directories": []},
             },
             "encfs": {
                 "enable": False,
@@ -28,12 +28,13 @@ class Config:
         }
 
     @staticmethod
-    def exists(config_file):
+    def exists(config_file: str):
         if not exists(config_file):
             printer('Configuration file does not exist. Use: "abyss --config create".', foreground=FG().ERROR)
             exit(1)
 
-    def set(self, menu, config):
+    def set(self, Menu: Callable, config: str):
+        menu = Menu()
         if menu.main().config == "create":
             create_path(menu.root_config)
             try:
@@ -53,3 +54,8 @@ class Config:
             except FileNotFoundError:
                 printer('Configuration file does not exist. Use: "abyss --config create".', foreground=FG().ERROR)
                 exit(1)
+        elif menu.main().config == "view":
+            pager(read_file(config))
+        elif menu.main().config == "reset":
+            create_path(menu.root_config)
+            create_json(self.get, menu.config_file, force=True)

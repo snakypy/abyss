@@ -14,7 +14,28 @@ from os.path import abspath, dirname, join
 
 from snakypy.helpers.files import eqversion
 
-__info__ = {"name": "abyss", "version": "0.1.0", "organization": "Snakypy"}
+__info__ = {
+    "name": "Abyss",
+    "version": "0.1.0",
+    "description": "",
+    "executable": "abyss",
+    "home_page": "https://github.com/snakypy/abyss",
+    "organization_name": "Snakypy",
+    "author": {
+        "name": "William C. Canin",
+        "email": "william.costa.canin@gmail.com",
+        "website": "https://williamcanin.github.io",
+        "github": "https://github.com/williamcanin",
+    },
+    "credence": [
+        {
+            "my_name": "William C. Canin",
+            "email": "william.costa.canin@gmail.com",
+            "website": "http://williamcanin.github.io",
+            "locale": "Brazil - SP",
+        }
+    ],
+}
 
 
 # Keep the versions the same on pyproject.toml and __init__.py

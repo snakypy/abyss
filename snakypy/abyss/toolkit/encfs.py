@@ -3,6 +3,7 @@ from os import environ, symlink, unlink
 from os.path import isdir, join
 from subprocess import run
 from sys import exit
+from typing import Callable
 
 from snakypy.helpers import FG, NONE, printer
 from snakypy.helpers.files import read_json
@@ -12,16 +13,16 @@ from snakypy.abyss.config import Config
 
 
 class Encfs:
-    def __init__(self, config_file):
+    def __init__(self, config_file: str):
         self.parser: dict = Config().get
         with suppress(FileNotFoundError):
-            self.parser: dict = read_json(config_file)
+            self.parser = read_json(config_file)
 
     def get_path(self) -> str:
         path: str = self.parser["encfs"]["path"]
         if "$HOME" in path:
-            path = str(run("echo $HOME", shell=True, capture_output=True, universal_newlines=True).stdout.strip())
-        return join(path, ".encfs")
+            path = path.replace("$HOME", environ["HOME"])
+        return path
 
     def verify_create(self):
         if not isdir(self.get_path()):
@@ -89,10 +90,11 @@ class Encfs:
         else:
             printer("There is no mounted repository.", foreground=FG().WARNING)
 
-    def main(self, menu, path):
+    def run(self, Menu: Callable, path: str):
         try:
             Config().exists(path)
 
+            menu = Menu()
             if self.parser["encfs"]["enable"]:
                 if menu.main().encfs == "create":
                     self.create()
